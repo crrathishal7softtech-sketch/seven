@@ -1,0 +1,20 @@
+# Eclipse
+.metadata/
+.recommenders/
+*.log
+*.lock
+.settings/
+.project
+.classpath
+
+# Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
