@@ -13,20 +13,20 @@ public class WishlistController {
     private WishlistService service;
 
     // ADD
-    @PostMapping("/{productId}")
+    @PostMapping("/add/{productId}")
     public String addToWishlist(@RequestParam Long userId,
                                 @PathVariable Long productId) {
         return service.add(userId, productId);
     }
 
     // VIEW
-    @GetMapping
+    @GetMapping("/fetch")
     public List<Wishlist> getWishlist(@RequestParam Long userId) {
         return service.getUserWishlist(userId);
     }
 
     // REMOVE
-    @DeleteMapping("/{productId}")
+    @DeleteMapping("/delete/{productId}")
     public String remove(@RequestParam Long userId,
                          @PathVariable Long productId) {
         return service.remove(userId, productId);

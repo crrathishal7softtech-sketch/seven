@@ -10,9 +10,26 @@ public class ProductService {
 
     @Autowired
     private ProductRepository repo;
+    @Autowired
+    private CategoryRepository categoryRepo;
 
     // CREATE / UPDATE
     public Product saveProduct(Product product) {
+    	// category validate pannrom
+        if (product.getCategory() != null) {
+            Long catId = product.getCategory().getId();
+
+            Category category = categoryRepo.findById(catId)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+            product.setCategory(category);
+        }
+
+        // images irundha product set pannrom
+        if (product.getImages() != null) {
+            product.getImages().forEach(img -> img.setProduct(product));
+        }
+
         return repo.save(product);
     }
 

@@ -1,5 +1,6 @@
 package eee.com.sevenfit;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,6 +9,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 public class SecurityConfig {
+	
+	@Autowired
+	private JwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -18,6 +22,7 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/login/**",
                     "/products/**",
+                    "/register",
                     "/categories/**",
                     "/swagger-ui/**",
                     "/wishlist/**",
@@ -26,6 +31,9 @@ public class SecurityConfig {
                 ).permitAll()
                 .requestMatchers("/cart/**").authenticated()
                 .anyRequest().permitAll());
+                http.addFilterBefore(
+                        jwtFilter,
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

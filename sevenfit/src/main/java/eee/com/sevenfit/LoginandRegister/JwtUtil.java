@@ -10,6 +10,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 public class JwtUtil {
 
     // ✅ 32+ characters (256 bits)
@@ -37,6 +39,23 @@ public class JwtUtil {
 
         return claims.getSubject(); // EMAIL
     }
+    public static boolean validateToken(String token, UserDetails userDetails) {
+        String username = extractUserEmail(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    }
+
+    public static boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+    private static Date extractExpiration(String token) {
+        return Jwts.parserBuilder()
+            .setSigningKey(KEY)
+            .build()
+            .parseClaimsJws(token)
+            .getBody()
+            .getExpiration();
+    }
+
 
 }
 

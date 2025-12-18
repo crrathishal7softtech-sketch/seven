@@ -20,11 +20,11 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Schema(hidden=true)
+   
     private String name; 
     
     
-    @Schema(hidden=true)
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 
