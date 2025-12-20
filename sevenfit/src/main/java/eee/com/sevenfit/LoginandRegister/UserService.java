@@ -39,6 +39,17 @@ public class UserService implements UserDetailsService{
          // ✅ Generate JWT token
          return JwtUtil.generateToken(user.getEmail());
     }
+    public User getCurrentUser(String email) {
+
+        User user = repo.findByEmail(email);
+
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+
+        return user;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {

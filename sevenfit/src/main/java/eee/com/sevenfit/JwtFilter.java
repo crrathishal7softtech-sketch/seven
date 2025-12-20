@@ -79,7 +79,7 @@ public class JwtFilter extends OncePerRequestFilter {
                             .buildDetails(request)
                     );
 
-                    // 🔥 THIS LINE FIXES 403
+                    
                     SecurityContextHolder.getContext()
                         .setAuthentication(authToken);
                 }
