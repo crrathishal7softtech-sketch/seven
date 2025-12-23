@@ -22,8 +22,16 @@ public class UserController {
     }
     
     @GetMapping("/UserFetch")
-    public UserDetails user(Authentication authentication) {
-        return (UserDetails) authentication.getPrincipal();
+   
+    public UserResponse user(Authentication authentication) {
+
+        String email = authentication.getName(); 
+        User user = service.getCurrentUser(email);
+
+        return new UserResponse(
+            user.getId(),
+            user.getEmail()
+        );
     }
 
 
